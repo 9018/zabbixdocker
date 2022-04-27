@@ -24,7 +24,7 @@ fi
 cd /root
 git clone https://github.com/9018/zabbixdocker.git
 cd zabbixdocker
-mv /etc/daemon.json daemon.json.bak
+mv /etc/docker/daemon.json daemon.json.bak
 cp daemon.json /etc/docker/daemon.json
 systemctl daemon-reload
 systemctl restart docker

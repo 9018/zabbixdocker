@@ -17,6 +17,11 @@ else
   apt-get update
   apt-get install -y docker
 fi
+cd zabbixdocker
+mv /etc/daemon.json daemon.json.bak
+cp daemon.json /etc/docker/daemon.json
+systemctl daemon-reload
+systemctl restart docker
 cd /root
 git clone https://github.com/9018/zabbixdocker.git
 cd zabbixdocker

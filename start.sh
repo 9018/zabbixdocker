@@ -16,15 +16,18 @@ if [ "$os" = 'cent' ]; then
 else
   apt-get update
   apt-get install -y docker
+  systemctl start docker.service
+  systemctl enable docker.service
+  pip install --upgrade pip
+  pip install docker-compose --ignore-installed requests
 fi
+cd /root
+git clone https://github.com/9018/zabbixdocker.git
 cd zabbixdocker
 mv /etc/daemon.json daemon.json.bak
 cp daemon.json /etc/docker/daemon.json
 systemctl daemon-reload
 systemctl restart docker
-cd /root
-git clone https://github.com/9018/zabbixdocker.git
-cd zabbixdocker
 mkdir /home/data
 mkdir /home/data/grafana
 chown -R 472:472 /home/data/grafana/

@@ -16,8 +16,8 @@ if [ "$os" = 'cent' ]; then
 else
   apt-get update
   apt-get install -y docker
-  systemctl start docker.service
-  systemctl enable docker.service
+  systemctl start docker
+  systemctl enable docker
   pip install --upgrade pip
   pip install docker-compose --ignore-installed requests
 fi

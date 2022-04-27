@@ -1,6 +1,6 @@
 #!/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-SHELL=/bin/sh
+SHELL=/bin/bash
 export PATH
 os=$(egrep -i 'debian|ubuntu|cent' -o -- /etc/issue)
 os="${os,,}"

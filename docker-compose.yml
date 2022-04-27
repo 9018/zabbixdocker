@@ -85,6 +85,20 @@ services:
       zabbixbr:
         ipv4_address: 172.25.0.2
     restart: always
+  portainer:
+    image: 6053537/portainer-ce
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      zabbixbr:
+        ipv4_address: 172.25.0.6
+    restart: always
+volumes:
+  portainer_data:
 networks:
   zabbixbr:
     driver: bridge

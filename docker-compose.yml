@@ -72,7 +72,7 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:8.3.7
     container_name: zabbix-grafana
     environment:
      TZ: Asia/Shanghai
@@ -81,6 +81,7 @@ services:
     volumes:
       - /home/data/grafana:/var/lib/grafana
       - ./grafana/plugins:/var/lib/grafana/plugins
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     networks:
       zabbixbr:
         ipv4_address: 172.25.0.2

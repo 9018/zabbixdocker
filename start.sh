@@ -32,7 +32,7 @@ systemctl daemon-reload
 systemctl restart docker
 mkdir /home/data
 mkdir /home/data/grafana
-chown -R 472:472 /home/data/grafana/
+chown -R -v 472:472 /home/data/grafana/
 docker-compose up -d 
 cd /root
 git clone https://github.com/deviantony/docker-elk.git

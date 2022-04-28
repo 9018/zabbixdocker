@@ -26,6 +26,7 @@ git clone https://github.com/9018/zabbixdocker.git
 cd zabbixdocker
 chown -R 472:472 grafana
 chmod -R 755 grafana/plugins/alexanderzobnin-zabbix-app/zabbix-plugin_linux_arm64
+chmod -R 755 grafana/plugins/alexanderzobnin-zabbix-app/zabbix-plugin_linux_amd64
 mv /etc/docker/daemon.json daemon.json.bak
 cp daemon.json /etc/docker/daemon.json
 systemctl daemon-reload

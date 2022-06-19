@@ -9,7 +9,8 @@ if [ "$os" = 'cent' ]; then
   yum update -n
   yum remove docker  docker-common docker-selinux docker-engine
   yum install -y yum-utils device-mapper-persistent-data lvm2
-  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+  sed -i 's+download.docker.com+mirrors.aliyun.com/docker-ce+' /etc/yum.repos.d/docker-ce.repo
   yum install docker-ce 
   yum install -y epel-release
   yum install -y wget git python-pip

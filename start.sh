@@ -39,7 +39,7 @@ mkdir /home/data
 mkdir /home/data/grafana
 chown -R -v 472:472 /home/data/grafana/
 docker-compose up -d 
-cd /root
-git clone https://github.com/deviantony/docker-elk.git
-cd docker-elk
-docker-compose up -d
+#cd /root
+#git clone https://github.com/deviantony/docker-elk.git
+#cd docker-elk
+#docker-compose up -d

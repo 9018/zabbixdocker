@@ -6,9 +6,13 @@ os=$(egrep -i 'debian|ubuntu|cent' -o -- /etc/issue)
 os="${os,,}"
 if [ -z "$os" ] && type yum; then os='cent'; fi
 if [ "$os" = 'cent' ]; then
-  yum update
+  yum update -n
+  yum remove docker  docker-common docker-selinux docker-engine
+  yum install -y yum-utils device-mapper-persistent-data lvm2
+  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  yum install docker-ce 
   yum install -y epel-release
-  yum install -y wget git python-pip docker
+  yum install -y wget git python-pip
   systemctl start docker.service
   systemctl enable docker.service
   sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose

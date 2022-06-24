@@ -18,12 +18,16 @@ if [ "$os" = 'cent' ]; then
   sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
 else
+  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add –
+  echo 'deb https://download.docker.com/linux/debian stretch stable'> /etc/apt/sources.list.d/docker.list
+  apt-get remove docker docker-engine docker.io containerd runc
+  apt-get install apt-transport-https  ca-certificates   curl  gnupg2  software-properties-common
   apt-get update
-  apt-get install -y docker.io
+  apt-get install docker-ce
+  apt install docker-compose
+  #apt-get install -y docker.io
   systemctl start docker
   systemctl enable docker
-  pip install --upgrade pip
-  pip install docker-compose --ignore-installed requests
 fi
 cd /root
 git clone https://github.com/9018/zabbixdocker.git

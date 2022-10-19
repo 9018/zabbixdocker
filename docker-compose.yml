@@ -2,7 +2,7 @@ version: '2'
 
 services:
   server:
-    image: zabbix/zabbix-server-mysql:6.0.5
+    image: zabbix/zabbix-server-mysql:6.0.5-ubuntu
     container_name: zabbix-server
     depends_on:
      - mysql
@@ -26,7 +26,7 @@ services:
     restart: always
   
   web:
-    image: zabbix/zabbix-web-nginx-mysql:6.0.5
+    image: zabbix/zabbix-web-nginx-mysql:6.0.5-ubuntu
     container_name: zabbix-web
     depends_on:
      - mysql

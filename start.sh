@@ -18,7 +18,7 @@ if [ "$os" = 'cent' ]; then
   sudo curl -L "https://github.com/docker/compose/releases/download/2.6.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
 else
-  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add –
+  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
   echo 'deb https://download.docker.com/linux/debian stretch stable'> /etc/apt/sources.list.d/docker.list
   apt-get remove docker docker-engine docker.io containerd runc
   apt-get install apt-transport-https  ca-certificates   curl  gnupg2  software-properties-common

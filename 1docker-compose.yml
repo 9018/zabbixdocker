@@ -1,0 +1,95 @@
+version: '2'
+
+services:
+  server:
+    image: zabbix/zabbix-server-mysql:latest
+    container_name: zabbix-server
+    depends_on:
+     - mysql
+    environment:
+      TZ: Asia/Shanghai
+      DB_SERVER_HOST: "mysql"
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "zabbix_pwd"
+      MYSQL_ROOT_PASSWORD: "root_pwd"
+    ports:
+     - "10051:10051"
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+    links:
+     - mysql:zabbix-mysql
+    user: root
+    networks:
+      zabbixbr:
+        ipv4_address: 172.25.0.4
+    restart: always
+  
+  web:
+    image: zabbix/zabbix-web-nginx-mysql:latest
+    container_name: zabbix-web
+    depends_on:
+     - mysql
+     - server
+    environment:
+      TZ: Asia/Shanghai
+      DB_SERVER_HOST: "mysql"
+      ZBX_SERVER_HOST: "server"
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "zabbix_pwd"
+      MYSQL_ROOT_PASSWORD: "root_pwd"
+    volumes:
+     - ./zabbix/DejaVuSans.ttf:/usr/share/zabbix/assets/fonts/DejaVuSans.ttf
+     - ./zabbix/frontend.mo:/usr/share/zabbix/locale/zh_CN/LC_MESSAGES/frontend.mo
+     - /etc/localtime:/etc/localtime:ro
+    links:
+      - mysql:zabbix-mysql
+      - server:zabbix-server
+    ports:
+     - "58080:8080"
+    user: root
+    networks:
+      zabbixbr:
+        ipv4_address: 172.25.0.5
+    restart: always
+  mysql:
+    image: mysql:latest
+    container_name: zabbix-mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "zabbix_pwd"
+      MYSQL_ROOT_PASSWORD: "root_pwd"     
+    networks:
+      zabbixbr:
+        ipv4_address: 172.25.0.3
+    volumes:
+     - /home/data/zabbix/database/mysql:/var/lib/mysql
+     - /etc/localtime:/etc/localtime:ro
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: zabbix-grafana
+    environment:
+     TZ: Asia/Shanghai
+    ports:
+      - 3000:3000
+    volumes:
+      - /home/data/grafana:/var/lib/grafana
+      #- ./grafana/plugins:/var/lib/grafana/plugins
+      #- ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    networks:
+      zabbixbr:
+        ipv4_address: 172.25.0.2
+    restart: always
+networks:
+  zabbixbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.25.0.0/16
+         gateway: 172.25.0.1
